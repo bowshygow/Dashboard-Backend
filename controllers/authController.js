@@ -7,6 +7,7 @@ const Transporter = require('../models/Transporter');
 
 // Register a new Manufacturer
 async function registerManufacturer(req, res) {
+  console.log("backend hit for manufacturer");
   const { username, password } = req.body;
 
   try {

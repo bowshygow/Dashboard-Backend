@@ -11,7 +11,7 @@ const {
 } = require('../controllers/authController');
 
 // Register routes for user registration and login
-router.post('/register/manufacturer', registerManufacturer);
+router.use('/register/manufacturer', registerManufacturer);
 router.post('/register/transporter', registerTransporter);
 router.post('/login', login);
 

@@ -1,4 +1,4 @@
-manufacturerController// backend/controllers/manufacturerController.js
+// backend/controllers/manufacturerController.js
 
 const Manufacturer = require('../models/Manufacturer');
 const Message = require('../models/Message');

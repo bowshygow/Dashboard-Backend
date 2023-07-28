@@ -1,18 +1,6 @@
-// db.js
-
 const mongoose = require('mongoose');
-const MONGODB_URI = 'mongodb://localhost:27017/mern_dashboard'; // Change this URI to your MongoDB database URL
+const MONGODB_URI = 'mongodb+srv://bowshygowtham:PCO3FO1mJ0H79543@cluster0.ifuynje.mongodb.net/?retryWrites=true&w=majority'; // Change this URI to your MongoDB database URL
+mongoose.connect(MONGODB_URI).then(console.log("DB connected")).catch(console.error);
 
-// Connect to MongoDB
-mongoose
-  .connect(MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  })
-  .then(() => {
-    console.log('MongoDB connected');
-  })
-  .catch((err) => {
-    console.error('MongoDB connection error:', err);
-  });
+
+module.export =  mongoose;
