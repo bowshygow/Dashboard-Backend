@@ -12,10 +12,6 @@ const manufacturerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  pickupAddress: {
-    type: String,
-    required: true,
-  },
   // You can include any other fields specific to Manufacturers
 });
 
