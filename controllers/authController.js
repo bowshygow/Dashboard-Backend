@@ -25,7 +25,7 @@ async function registerManufacturer(req, res) {
     await manufacturer.save();
 
     // Generate a JWT token for the new Manufacturer
-    const token = jwt.sign({ id: manufacturer._id }, 'your_secret_key_here');
+    const token = jwt.sign({ id: manufacturer._id,userType:'manufacturer' }, 'your_secret_key_here');
 
     res.status(201).json({ message: 'Manufacturer registered successfully', token });
   } catch (error) {
@@ -53,7 +53,7 @@ async function registerTransporter(req, res) {
     await transporter.save();
 
     // Generate a JWT token for the new Transporter
-    const token = jwt.sign({ id: transporter._id }, 'your_secret_key_here');
+    const token = jwt.sign({ id: transporter._id, userType:'manufacturer' }, 'your_secret_key_here');
 
     res.status(201).json({ message: 'Transporter registered successfully', token });
   } catch (error) {
@@ -62,15 +62,26 @@ async function registerTransporter(req, res) {
   }
 }
 
-// Login for both Manufacturer and Transporter
 async function login(req, res) {
   const { username, password } = req.body;
 
   try {
     // Find the user (Manufacturer or Transporter) by username
-    const user = await Manufacturer.findOne({ username }) || await Transporter.findOne({ username });
+    const manufacturerUser = await Manufacturer.findOne({ username });
+    const transporterUser = await Transporter.findOne({ username });
 
-    // Check if the user exists
+    let user = null;
+    let userType = null;
+
+    // Check if the user exists and determine the userType
+    if (manufacturerUser) {
+      user = manufacturerUser;
+      userType = 'manufacturer';
+    } else if (transporterUser) {
+      user = transporterUser;
+      userType = 'transporter';
+    }
+
     if (!user) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
@@ -82,7 +93,7 @@ async function login(req, res) {
     }
 
     // Generate a JWT token for the user
-    const token = jwt.sign({ id: user._id }, 'your_secret_key_here');
+    const token = jwt.sign({ id: user._id, userType }, 'your_secret_key_here');
 
     res.status(200).json({ message: 'Login successful', token });
   } catch (error) {
@@ -90,6 +101,7 @@ async function login(req, res) {
     res.status(500).json({ message: 'An error occurred while processing the login request' });
   }
 }
+
 
 module.exports = {
   registerManufacturer,
