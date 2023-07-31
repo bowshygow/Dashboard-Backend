@@ -8,8 +8,11 @@ async function createManufacturerOrder(req, res) {
   const { order_id, from, to, quantity, pickupAddress, transporter } = req.body;
 
   try {
+
+    
     // Get the Manufacturer ID from the JWT token (assuming the token is already verified in middleware)
-    const manufacturerId = req.user.id;
+    const manufacturerName = req.body.username;
+    console.log(req.body);
 
     // Create a new message to be sent to the Transporter
     const message = new Message({
@@ -19,7 +22,7 @@ async function createManufacturerOrder(req, res) {
       quantity,
       pickupAddress,
       transporter,
-      sender: manufacturerId,
+      sender: manufacturerName,
     });
 
     await message.save();
@@ -35,10 +38,11 @@ async function createManufacturerOrder(req, res) {
 async function getManufacturerOrders(req, res) {
   try {
     // Get the Manufacturer ID from the JWT token (assuming the token is already verified in middleware)
-    const manufacturerId = req.user.id;
+    console.log(req.body);
+    const manufacturerName = req.body.username;
 
     // Fetch all messages for the Manufacturer
-    const messages = await Message.find({ sender: manufacturerId });
+    const messages = await Message.find({ sender: manufacturerName });
 
     res.status(200).json({ data: messages });
   } catch (error) {

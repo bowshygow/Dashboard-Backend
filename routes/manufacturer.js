@@ -11,6 +11,6 @@ const {
 
 // Routes for manufacturer-specific functionalities
 router.post('/order', createManufacturerOrder);
-router.get('/orders', getManufacturerOrders);
+router.post('/orders', getManufacturerOrders);
 
 module.exports = router;

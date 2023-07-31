@@ -7,10 +7,14 @@ const router = express.Router();
 const {
   acceptOrder,
   getTransporterOrders,
+  getAllTransporters,
+  replyToManufacturer
 } = require('../controllers/transporterController');
 
 // Routes for transporter-specific functionalities
 router.post('/acceptOrder', acceptOrder);
-router.get('/orders', getTransporterOrders);
+router.post('/orders', getTransporterOrders);
+router.get('/all', getAllTransporters );
+router.post('/reply', replyToManufacturer );
 
 module.exports = router;

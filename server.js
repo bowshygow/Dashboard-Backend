@@ -14,22 +14,17 @@ app.use(cors());
 
 const mongoose = require('mongoose');
 const MONGODB_URI = 'mongodb+srv://bowshygowtham:PCO3FO1mJ0H79543@cluster0.ifuynje.mongodb.net/?retryWrites=true&w=majority'; // Change this URI to your MongoDB database URL
-mongoose.connect(MONGODB_URI).then( ()=>{  const authRoutes = require('./routes/auth');
-const manufacturerRoutes = require('./routes/manufacturer');
-const transporterRoutes = require('./routes/transporter');
-app.use('/api/auth', authRoutes);
-app.use('/api/manufacturer', manufacturerRoutes);
-app.use('/api/transporter', transporterRoutes)}
+
+mongoose.connect(MONGODB_URI)
+.then( ()=>{  
+  const authRoutes = require('./routes/auth');
+  const manufacturerRoutes = require('./routes/manufacturer');
+  const transporterRoutes = require('./routes/transporter');
+  app.use('/api/auth', authRoutes);
+  app.use('/api/manufacturer', manufacturerRoutes);
+  app.use('/api/transporter', transporterRoutes)}
 ).catch(console.error);
 
-// Routes
-// const authRoutes = require('./routes/auth');
-// const manufacturerRoutes = require('./routes/manufacturer');
-// const transporterRoutes = require('./routes/transporter');
-
-// app.use('/api/auth', authRoutes);
-// app.use('/api/manufacturer', manufacturerRoutes);
-// app.use('/api/transporter', transporterRoutes);
 
 // Start the server
 app.listen(PORT, () => {

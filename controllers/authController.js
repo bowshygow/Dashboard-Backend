@@ -95,6 +95,8 @@ async function login(req, res) {
     // Generate a JWT token for the user
     const token = jwt.sign({ id: user._id, userType }, 'your_secret_key_here');
 
+    
+
     res.status(200).json({ message: 'Login successful', token });
   } catch (error) {
     console.error(error);
