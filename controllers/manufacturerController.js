@@ -9,10 +9,10 @@ async function createManufacturerOrder(req, res) {
 
   try {
 
-    
+    console.log('current test subjexct ', req.body, req);
     // Get the Manufacturer ID from the JWT token (assuming the token is already verified in middleware)
     const manufacturerName = req.body.username;
-    console.log(req.body);
+
 
     // Create a new message to be sent to the Transporter
     const message = new Message({

@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs'); // For password hashing
 const jwt = require('jsonwebtoken'); // For generating JWT tokens
 const Manufacturer = require('../models/Manufacturer');
 const Transporter = require('../models/Transporter');
+const secret_key = "Bowshydashboard" 
+
 
 // Register a new Manufacturer
 async function registerManufacturer(req, res) {
@@ -25,7 +27,7 @@ async function registerManufacturer(req, res) {
     await manufacturer.save();
 
     // Generate a JWT token for the new Manufacturer
-    const token = jwt.sign({ id: manufacturer._id,userType:'manufacturer' }, 'your_secret_key_here');
+    const token = jwt.sign({ id: manufacturer._id,userType:'manufacturer' }, secret_key);
 
     res.status(201).json({ message: 'Manufacturer registered successfully', token });
   } catch (error) {
@@ -53,7 +55,7 @@ async function registerTransporter(req, res) {
     await transporter.save();
 
     // Generate a JWT token for the new Transporter
-    const token = jwt.sign({ id: transporter._id, userType:'manufacturer' }, 'your_secret_key_here');
+    const token = jwt.sign({ id: transporter._id, userType:'Transporter' }, secret_key);
 
     res.status(201).json({ message: 'Transporter registered successfully', token });
   } catch (error) {
@@ -91,11 +93,12 @@ async function login(req, res) {
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
+    
+    const userRequest = { id: user._id, userType }
 
     // Generate a JWT token for the user
-    const token = jwt.sign({ id: user._id, userType }, 'your_secret_key_here');
-
-    
+    const token = jwt.sign(userRequest, secret_key);
+    console.log(token);
 
     res.status(200).json({ message: 'Login successful', token });
   } catch (error) {
@@ -103,7 +106,6 @@ async function login(req, res) {
     res.status(500).json({ message: 'An error occurred while processing the login request' });
   }
 }
-
 
 module.exports = {
   registerManufacturer,
